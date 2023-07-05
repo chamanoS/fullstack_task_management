@@ -1,4 +1,4 @@
-// app.js
+
 
 // Fetch all tasks from the backend
 async function fetchTasks() {
