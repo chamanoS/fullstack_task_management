@@ -21,7 +21,7 @@ async function fetchTasks() {
         blog += '</p>';
         blog += '<div class="post-buttons">';
         blog += '<button class="edit-post">Edit</button>';
-        blog += '<button class="delete-post">Delete</button>';
+        blog += '<button class="delete-post" onClick=(deleteTask(id))>Delete</button>';
         blog += "</div>";
         blog += "<br>";
         blog += '<a href="#" class="read-more">Read More</a>';
@@ -51,13 +51,18 @@ async function fetchTasks() {
   // Delete a task by sending a DELETE request to the backend
   async function deleteTask(id) {
     await fetch(`http://localhost:3000/tasks/${id}`,{
-        method:"POST"
+        method:"DELETE"
     });
     await fetchTasks();
   }
   
   // Add event listeners and initialize the application
   document.addEventListener('DOMContentLoaded', () => {
-   
+    const submit = document.getElementById("submit");
+    submit.addEventListener('submit', createTask);
+
+    const fetchAll = document.getElementById("fetch-btn");
+    fetchAll.addEventListener('click', fetchTasks);
+    fetchTasks();
   });
   
