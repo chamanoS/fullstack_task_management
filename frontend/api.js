@@ -43,14 +43,17 @@ async function fetchTasks() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title }),
     });
-    
+
     document.getElementById("title-input").value = "";
     await fetchTasks();
   }
   
   // Delete a task by sending a DELETE request to the backend
   async function deleteTask(id) {
-   
+    await fetch(`http://localhost:3000/tasks/${id}`,{
+        method:"POST"
+    });
+    await fetchTasks();
   }
   
   // Add event listeners and initialize the application
