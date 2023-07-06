@@ -69,18 +69,32 @@ async function fetchTasks() {
   }
   
   // Edit a task by sending an EDIT request to the backend
-  async function editTask(id) {
-    const title = prompt("Enter new task title:"); // Prompt the user to enter a new task title
+    async function editTask(id) {
+    const titleElement = document.querySelector(".post-title");
+    const contentElement = document.querySelector(".post-content");
+    let title = titleElement.textContent;
+    let content = contentElement.textContent;
   
-    if (title) {
+    // Check if the title is editable and retrieve the new value if it is
+    if (titleElement.contentEditable === "true") {
+      title = titleElement.innerText;
+    }
+  
+    // Check if the content is editable and retrieve the new value if it is
+    if (contentElement.contentEditable === "true") {
+      content = contentElement.innerText;
+    }
+  
+    if (title && content) {
       await fetch(`http://localhost:3000/tasks/${id}`, {
         method: "PUT", // Assuming your backend supports a PUT request for editing tasks
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title }),
+        body: JSON.stringify({ title, content }),
       });
       await fetchTasks();
     }
   }
+  
   
   // Delete a task by sending a DELETE request to the backend
   async function deleteTask(id) {
