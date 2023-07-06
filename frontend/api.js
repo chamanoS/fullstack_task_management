@@ -2,7 +2,10 @@
 
 // Fetch all tasks from the backend
 async function fetchTasks() {
-  
+    const response = await fetch("http://localhost:3000/tasks");
+    const tasks = await response.jason();
+    
+    
   }
   
   // Create a task by sending a POST request to the backend
