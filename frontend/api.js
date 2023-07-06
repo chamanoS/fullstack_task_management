@@ -35,7 +35,17 @@ async function fetchTasks() {
   
   // Create a task by sending a POST request to the backend
   async function createTask(event) {
+    event.preventDefault();
+    const title = document.getElementById("title-input").value;
+
+    await fetch("http://localhost:3000/tasks",{
+        method:"POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title }),
+    });
     
+    document.getElementById("title-input").value = "";
+    await fetchTasks();
   }
   
   // Delete a task by sending a DELETE request to the backend
