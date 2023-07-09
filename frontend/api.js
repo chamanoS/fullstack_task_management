@@ -57,14 +57,16 @@ async function fetchTasks() {
   async function createTask(event) {
     event.preventDefault();
     const title = document.getElementById("title-input").value;
+    const content = document.getElementById("content-input").value;
   
     await fetch("http://localhost:3000/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title }),
+      body: JSON.stringify({ title, content }),
     });
   
     document.getElementById("title-input").value = "";
+    document.getElementById("content-input").value = "";
     await fetchTasks();
   }
   
