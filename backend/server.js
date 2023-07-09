@@ -25,7 +25,20 @@ db.connect((err) => {
 
  
 //create the end points here
-
+// Create a task
+app.post('/tasks', (req, res) => {
+    const { title, content } = req.body;
+    const query = 'INSERT INTO tasks (title, content) VALUES (?, ?)';
+    db.query(query, [title, content], (err, result) => {
+      if (err) {
+        console.error('Error creating the task: ', err);
+        res.status(500).json({ error: 'Failed to create the task' });
+        return;
+      }
+      console.log('Task created successfully');
+      res.status(200).json({ message: 'Task created successfully' });
+    });
+  });
 
 // Start the server
 app.listen(3000, () => {
