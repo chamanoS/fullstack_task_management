@@ -28,7 +28,7 @@ db.connect((err) => {
 // Create a task
 app.post('/tasks', (req, res) => {
     const { title, content } = req.body;
-    const query = 'INSERT INTO tasks (title, content) VALUES (?, ?)';
+    const query = 'INSERT INTO blog_posts (title, content) VALUES (?, ?)';
     db.query(query, [title, content], (err, result) => {
       if (err) {
         console.error('Error creating the task: ', err);
@@ -39,6 +39,19 @@ app.post('/tasks', (req, res) => {
       res.status(200).json({ message: 'Task created successfully' });
     });
   });
+
+  // Fetch all tasks
+    app.get('/tasks', (req, res) => {
+        const query = 'SELECT * FROM blog_posts';
+        db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching tasks: ', err);
+            res.status(500).json({ error: 'Failed to fetch tasks' });
+            return;
+        }
+        res.status(200).json(results);
+        });
+    });
 
 // Start the server
 app.listen(3000, () => {
